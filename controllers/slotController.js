@@ -36,7 +36,7 @@ const getAvailableSlots = async (req, res) => {
     let slots = generateSlots(
       availability.startTime,
       availability.endTime,
-      availability.slotDuration
+      availability.slotDuration,
     );
 
     const appointments = await Appointment.find({
@@ -49,7 +49,7 @@ const getAvailableSlots = async (req, res) => {
       return !appointments.some(
         (appointment) =>
           appointment.startTime === slot.startTime &&
-          appointment.endTime === slot.endTime
+          appointment.endTime === slot.endTime,
       );
     });
 
@@ -58,7 +58,6 @@ const getAvailableSlots = async (req, res) => {
       date,
       slots,
     });
-
   } catch (error) {
     return res.status(500).json({
       success: false,

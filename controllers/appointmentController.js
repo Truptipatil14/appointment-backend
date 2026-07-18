@@ -34,7 +34,7 @@ const bookAppointment = async (req, res) => {
     const slots = generateSlots(
       availability.startTime,
       availability.endTime,
-      availability.slotDuration
+      availability.slotDuration,
     );
 
     const matchedSlot = slots.find((slot) => slot.startTime === startTime);
@@ -124,7 +124,9 @@ const cancelAppointment = async (req, res) => {
       appointment.providerId.toString() === req.user._id.toString();
 
     if (!isOwner && !isProvider) {
-      return res.status(403).json({ success: false, message: "Not authorized" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Not authorized" });
     }
 
     appointment.status = "Cancelled";
@@ -147,7 +149,9 @@ const updateAppointmentStatus = async (req, res) => {
     const allowed = ["Pending", "Confirmed", "Completed", "Cancelled"];
 
     if (!allowed.includes(status)) {
-      return res.status(400).json({ success: false, message: "Invalid status" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid status" });
     }
 
     const appointment = await Appointment.findById(req.params.id);
@@ -159,7 +163,9 @@ const updateAppointmentStatus = async (req, res) => {
     }
 
     if (appointment.providerId.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ success: false, message: "Not authorized" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Not authorized" });
     }
 
     appointment.status = status;

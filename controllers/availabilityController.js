@@ -79,9 +79,7 @@ const createAvailability = async (req, res) => {
     });
   }
 };
-      
-        
-   
+
 // Get All Availability
 const getAllAvailability = async (req, res) => {
   try {
@@ -122,7 +120,7 @@ const updateAvailability = async (req, res) => {
     const updated = await Availability.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true },
     );
 
     if (!updated) {
